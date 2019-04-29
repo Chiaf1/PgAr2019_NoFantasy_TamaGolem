@@ -8,7 +8,12 @@ public class Nodo {
 	private static int coloreAtt = 0;
 	
 	public Nodo() {
-		
+		colore = colori[coloreAtt];
+		coloreAtt++;
+	}
+	
+	public Nodo(boolean i) {
+		colore = "Err";
 	}
 
 	public String getColore() {
@@ -20,11 +25,11 @@ public class Nodo {
 	}
 	
 	public void addArco(int i) {
-		
+		indiciArchi.add(i);
 	}
 	
 	public void removeArco(int i) {
-		
+		indiciArchi.remove(i);
 	}
 
 }

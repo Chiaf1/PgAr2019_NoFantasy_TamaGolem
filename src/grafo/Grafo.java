@@ -1,4 +1,4 @@
-package Grafo;
+package grafo;
 
 import java.util.*;
 
@@ -125,13 +125,13 @@ public class Grafo {
 			for (int i = d + 1; i < nodi.size() - 1; i++) {
 				int c = rnd.nextInt(2);
 				if (c == 0) {
-					Arco newArco = new Arco(nodi.get(d), nodi.get(i), rnd.nextInt(v-1)+1);
+					Arco newArco = new Arco(nodi.get(d), nodi.get(i), rnd.nextInt(v - 1) + 1);
 					archi.put(indiceArchiAtt, newArco);
 					nodi.get(d).getIndiciArchi().add(indiceArchiAtt);
 					nodi.get(i).getIndiciArchi().add(indiceArchiAtt);
 					indiceArchiAtt++;
 				} else {
-					Arco newArco = new Arco(nodi.get(i), nodi.get(d), rnd.nextInt(v-1)+1);
+					Arco newArco = new Arco(nodi.get(i), nodi.get(d), rnd.nextInt(v - 1) + 1);
 					archi.put(indiceArchiAtt, newArco);
 					nodi.get(d).getIndiciArchi().add(indiceArchiAtt);
 					nodi.get(i).getIndiciArchi().add(indiceArchiAtt);
@@ -160,9 +160,9 @@ public class Grafo {
 					nodi.get(nodi.size() - 1).getIndiciArchi().add(indiceArchiAtt);
 					indiceArchiAtt++;
 				}
-			}else {
-				if (ingressi-uscite < 0) {
-					
+			} else {
+				if (ingressi - uscite < 0) {
+
 				}
 			}
 		}
@@ -183,5 +183,12 @@ public class Grafo {
 	 */
 	private void addNodo() {
 
+	}
+	
+	/**
+	 * 
+	 */
+	public void reset() {
+		
 	}
 }

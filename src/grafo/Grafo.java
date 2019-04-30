@@ -4,34 +4,34 @@ import java.util.*;
 
 public class Grafo {
 	/**
-	 * 
+	 * lista che contiene tutti i nodi appartenenti al grafo
 	 */
 	private ArrayList<Nodo> nodi = new ArrayList<Nodo>();
 	/**
-	 * 
+	 * mappa contenente tutti gli archi che collegano i vari nodi
 	 */
 	private Map<Integer, Arco> archi = new HashMap<>();
 	/**
-	 * 
+	 * valore massimo della potenza di un arco
 	 */
 	private int v;
 	/**
-	 * 
+	 * numero di nodi/pietre
 	 */
 	private int n;
 	/**
-	 * 
+	 * nodo privo di dati utilizzato in caso di errore
 	 */
 	private Nodo vuoto = new Nodo(false);
 	/**
-	 * 
+	 * indice dell'arco che è stato aggiunto per ultimo nella mappa
 	 */
 	private int indiceArchiAtt = 0;
 
 	/**
-	 * 
-	 * @param v
-	 * @param n
+	 * costruttore del grafo che autocompila il tutto creando anche l'equilibrio
+	 * @param v (potenza massima pietra)
+	 * @param n (numero delle pietre)
 	 */
 	public Grafo(int v, int n) {
 		this.v = v;
@@ -41,17 +41,17 @@ public class Grafo {
 	}
 
 	/**
-	 * 
-	 * @return
+	 * ritorna la lista completa dei nodi
+	 * @return la lista completa dei nodi
 	 */
 	public ArrayList<Nodo> getNodi() {
 		return nodi;
 	}
 
 	/**
-	 * 
-	 * @param colore
-	 * @return
+	 * ritorna il nodo richiesto cercandolo in base al nome/colore, nel caso un cui non si trovasse il nodo ritorna il nodo "vuoto"
+	 * @param colore (indice per la ricerca)
+	 * @return il nodo trovato
 	 */
 	public Nodo getNodo(String colore) {
 		for (int i = 0; i < nodi.size(); i++) {
@@ -63,9 +63,9 @@ public class Grafo {
 	}
 
 	/**
-	 * 
-	 * @param i
-	 * @return
+	 * ritorna il nodo appartenente all'indice, se non viene trovato viene ritornato l'insieme vuoto
+	 * @param i (indice del nodo da cercare)
+	 * @return il nodo richiesto
 	 */
 	public Nodo getNodo(int i) {
 		if (i < nodi.size() && i >= 0) {
@@ -75,17 +75,17 @@ public class Grafo {
 	}
 
 	/**
-	 * 
-	 * @return
+	 * ritorna la mappa contenente gli archi del grafo
+	 * @return la mappa degli archi
 	 */
 	public Map<Integer, Arco> getArchi() {
 		return archi;
 	}
 
 	/**
-	 * 
-	 * @param i
-	 * @return
+	 * ritorna l'arco appartenente alla chiave i, nel caso in cui non ci siano archi appartenenti alla chiave i ritorna l'arco vuoto
+	 * @param i (chiave di ricerca)
+	 * @return l'arco richiesto
 	 */
 	public Arco getArco(int i) {
 		if (i < archi.size() && i >= 0) {
@@ -96,23 +96,23 @@ public class Grafo {
 	}
 
 	/**
-	 * 
-	 * @return
+	 * ritorna il valore di potenza massima delle pietre
+	 * @return il valore di potenza massima delle pietre
 	 */
 	public int getV() {
 		return v;
 	}
 
 	/**
-	 * 
-	 * @return
+	 * ritorna il numero di nodi/pietre
+	 * @return il numero di nodi/pietre
 	 */
 	public int getN() {
 		return n;
 	}
 
 	/**
-	 * 
+	 * metodo che genera l'equilibrio della parita
 	 */
 	private void generaEq() {
 		Random rnd = new Random();
@@ -169,24 +169,24 @@ public class Grafo {
 	}
 
 	/**
-	 * 
-	 * @param nodo1
-	 * @param nodo2
-	 * @param v
+	 * metodo per l'aggiunta di un arco
+	 * @param nodo1 (primo nodo appartenente all'arco)
+	 * @param nodo2 (secondo nodo appartenente all'arco)
+	 * @param v (valore dell'arco)
 	 */
 	private void addArco(Nodo nodo1, Nodo nodo2, int v) {
 
 	}
 
 	/**
-	 * 
+	 * metodo per l'aggiunta di un nodo che viene creato in automatico in mniera sequenziale
 	 */
 	private void addNodo() {
 
 	}
 	
 	/**
-	 * 
+	 * resetta tutto il grafo
 	 */
 	public void reset() {
 		

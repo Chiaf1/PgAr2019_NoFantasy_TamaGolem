@@ -14,7 +14,7 @@ public class Arco {
 	 */
 	private int valore;
 	/**
-	 * direzione dell'arco, 0 da nodo1 a nodo2, 1 da nodo1 a nodo2
+	 * direzione dell'arco, 0 da nodo1 a nodo2, 1 da nodo2 a nodo1
 	 */
 	private boolean direzione;
 

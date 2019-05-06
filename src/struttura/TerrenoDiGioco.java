@@ -7,6 +7,10 @@ import interfaccia.*;
 
 public class TerrenoDiGioco {
 	/**
+	 * valore massimo della potenza del legame tra due elementi
+	 */
+	private static final int V = 10;
+	/**
 	 * lista contenente le queue delle pietre disponibili
 	 */
 	private ArrayList<Queue<String>> borsaPietre = new ArrayList<Queue<String>>();
@@ -27,6 +31,25 @@ public class TerrenoDiGioco {
 	 * 
 	 */
 	public TerrenoDiGioco() {
+		int n // numero di elementi
+				, g // numero di tamagolem per giocatore
+				, p // numero di pietre per golem
+				, s // numero di pietre nella scorta comune
+				, sp // numero di pietre per elemento nella borsa
+				, v; // valore massimo della potenza di un legame tra elementi
+
+		n = (int) interfaccia.letturaDouble("Inserire il numero di elementi per determinare la difficoltà\n"
+				+ "(facile (3;5))\n" + "(medio (6;8))\n" + "(difficile (9;10)): ");
+
+		p = (int) Math.ceil((n + 1) / 3) + 1;
+
+		g = (int) Math.ceil(((n - 1) * (n - 2)) / (2 * p));
+
+		sp = (int) Math.ceil((2 * g * p) / n);
+
+		s = sp * n;
+
+		v = V;
 
 	}
 
@@ -36,14 +59,14 @@ public class TerrenoDiGioco {
 	public void inizioPartita() {
 
 	}
-	
+
 	/**
 	 * 
 	 */
 	public void finePartita() {
-		
+
 	}
-	
+
 	/**
 	 * 
 	 * @return il nome del giocatore vincente
@@ -56,7 +79,7 @@ public class TerrenoDiGioco {
 	 * 
 	 */
 	public void scontro() {
-		
+
 	}
 
 	/**
@@ -68,5 +91,5 @@ public class TerrenoDiGioco {
 	private boolean evocazioneGolem(int giocatore) {
 		return true;
 	}
-	
+
 }

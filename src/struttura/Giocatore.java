@@ -32,12 +32,12 @@ public class Giocatore {
 	 * @param nMaxGolem (numero massimo di golem)
 	 * @param nome      (nome del giocatore)
 	 */
-	public Giocatore(int nMaxGolem, String nome) {
+	public Giocatore(int nMaxGolem, String nome, int nPietreGolem) {
 		this.nMaxGolem = nMaxGolem;
 		this.nome = nome;
 
 		for (int i = 0; i <= nMaxGolem; i++) {
-			TamaGolem newGolem = new TamaGolem();
+			TamaGolem newGolem = new TamaGolem(nPietreGolem);
 			golems.add(newGolem);
 		}
 		nGolemDisp = golems.size();

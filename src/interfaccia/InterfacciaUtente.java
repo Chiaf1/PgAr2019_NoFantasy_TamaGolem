@@ -3,6 +3,8 @@ package interfaccia;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import struttura.Giocatore;
+
 public class InterfacciaUtente {
 	/**
 	 * scanner per la lettura da console
@@ -73,9 +75,11 @@ public class InterfacciaUtente {
 	 * metodo per la scrittura del messaggio di fine partita con l'annuncio del
 	 * vincitore
 	 * 
-	 * @param vincitore (nome del giocatore vincitore della partita)
+	 * @param vincitore (il giocatore vincitore della partita)
 	 */
-	public void finePartita(String vincitore) {
-
+	public void finePartita(Giocatore vincitore) {
+		scriviR("Bene!!! la partita è finalmente finita ora è il momento per insultare il perdente.\n"
+				+ "che non è " + vincitore.getNome() + ", lui ha vinto.");
+		scriviR("Ha vinto con la bellezza di " + vincitore.getGolemDisp() + " golem ancora disponibili");
 	}
 }

@@ -35,9 +35,9 @@ public class Giocatore {
 	public Giocatore(int nMaxGolem, String nome, int nPietreGolem) {
 		this.nMaxGolem = nMaxGolem;
 		this.nome = nome;
-		
+
 		TamaGolem newGolem = new TamaGolem(nPietreGolem);
-		
+
 		for (int i = 0; i <= nMaxGolem; i++) {
 			TamaGolem newNewGolem = new TamaGolem();
 			golems.add(newGolem);
@@ -65,7 +65,17 @@ public class Giocatore {
 				}
 			}
 		}
+		nGolemDisp = 0;
 		return false;
+	}
+
+	/**
+	 * ritorna il nome del giocatore
+	 * 
+	 * @return il nome del giocatore
+	 */
+	public String getNome() {
+		return nome;
 	}
 
 	/**

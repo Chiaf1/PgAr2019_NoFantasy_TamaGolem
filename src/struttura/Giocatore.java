@@ -14,7 +14,7 @@ public class Giocatore {
 	/**
 	 * numero massimo dei golem di un giocatore
 	 */
-	private static int nGolems = 0;
+	private static int nMaxGolem = 0;
 	/**
 	 * numero dei golem disponibili del giocatore
 	 */
@@ -23,50 +23,81 @@ public class Giocatore {
 	 * indice del golem attivo del giocatore
 	 */
 	private int golemAttivo;
-	
+
 	/**
+	 * al costruttore passo il numero massimo di golem ed il nome, e viene creato
+	 * l'array di golem a seconda del loro numero e viene inizializzato il numero di
+	 * golem disponibili
 	 * 
+	 * @param nMaxGolem (numero massimo di golem)
+	 * @param nome      (nome del giocatore)
 	 */
-	public Giocatore() {
-		
+	public Giocatore(int nMaxGolem, String nome) {
+		this.nMaxGolem = nMaxGolem;
+		this.nome = nome;
+
+		for (int i = 0; i <= nMaxGolem; i++) {
+			TamaGolem newGolem = new TamaGolem();
+			golems.add(newGolem);
+		}
+		nGolemDisp = golems.size();
 	}
-	
+
 	/**
+	 * metodo per l'evocazione del nuovo golem dalla lista del giocatore. quando
+	 * viene richiesto viene messo come golem attivo il primo golem disponibile
+	 * nella lista del giocatore
 	 * 
-	 * @return
+	 * @return true se è stato possibile selezionare un golem, false se non è stato
+	 *         trovato un golem disponibile
 	 */
 	public boolean evocazioneGolem() {
-		return true;
+		if (nGolemDisp > 0) {
+			for (int i = 0; i < golems.size(); i++) {
+				if (golems.get(i).getIsDisponibile()) {
+					golemAttivo = i;
+					if (i > 1) {
+						nGolemDisp = nMaxGolem - (i - 1);
+					}
+					return true;
+				}
+			}
+		}
+		return false;
 	}
-	
+
 	/**
+	 * ritorna l'indice del golem attivo
 	 * 
-	 * @return
+	 * @return l'indice del golem attivo
 	 */
 	public int getGolemAttivo() {
 		return golemAttivo;
 	}
-	
+
 	/**
+	 * ritorna la lista di golem del giocatore
 	 * 
-	 * @return
+	 * @return la lista di golem del giocatore
 	 */
-	public ArrayList<TamaGolem> getGolems(){
+	public ArrayList<TamaGolem> getGolems() {
 		return golems;
 	}
-	
+
 	/**
+	 * ritorna il golem richiesto
 	 * 
-	 * @param i
-	 * @return
+	 * @param i (indice del golem da cercare)
+	 * @return il golem all'indice i
 	 */
 	public TamaGolem getGolem(int i) {
 		return golems.get(i);
 	}
-	
+
 	/**
+	 * ritorna il numero di golem disponibili
 	 * 
-	 * @return
+	 * @return il nuemro di golem disponibili
 	 */
 	public int getGolemDisp() {
 		return nGolemDisp;

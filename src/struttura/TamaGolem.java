@@ -14,7 +14,7 @@ public class TamaGolem {
 	/**
 	 * vita massima di un golem
 	 */
-	private int vitaMax = 1;
+	private static int vitaMax = 100;
 	/**
 	 * vita attuale del golem
 	 */
@@ -26,41 +26,71 @@ public class TamaGolem {
 	private boolean isDisponibile = true;
 
 	/**
-	 * 
+	 * costruttore della classe tamaGolem che inizializza il numero massimo di
+	 * pietre
 	 */
-	public TamaGolem() {
-		
+	public TamaGolem(int nPietre) {
+		this.nPietre = nPietre;
 	}
 
 	/**
+	 * metodo per l'assegnazione delle pietre
 	 * 
+	 * @param pietreSelez (pietre da assegnare al golem)
 	 */
-	public void setUpGolem() {
-
+	public void setUpGolem(String[] pietreSelez) {
+		for (int i = 0; i < pietreSelez.length; i++) {
+			pietre.add(pietreSelez[i]);
+		}
 	}
 
 	/**
+	 * ritorna il numero massimo di pietre
 	 * 
-	 * @return
+	 * @return il numero massimo di pietre
+	 */
+	public static int getnPietre() {
+		return nPietre;
+	}
+
+	/**
+	 * ritorna il valore della vita massima
+	 * 
+	 * @return il valore della vita massima
+	 */
+	public static int getVitaMax() {
+		return vitaMax;
+	}
+
+	/**
+	 * ritorna il valore attuale della vita
+	 * 
+	 * @return il valore attuale della vita
 	 */
 	public int getVitaAtt() {
 		return vitaAtt;
 	}
 
 	/**
+	 * ritorna true se il golem è disponibile, false se non lo è
 	 * 
-	 * @return
+	 * @return true se il golem è disponibile, false se non lo è
 	 */
 	public boolean getIsDisponibile() {
 		return isDisponibile;
 	}
 
 	/**
+	 * metodo per decrementare la vita del golem, quando raggiunge lo 0 il flag
+	 * isDisponibile viene messo a false
 	 * 
-	 * @param danno
+	 * @param danno (valore da sottrarre alla vita)
 	 */
 	public void decVita(int danno) {
-
+		vitaAtt = vitaAtt - danno;
+		if (!(vitaAtt > 0)) {
+			isDisponibile = false;
+		}
 	}
 
 	/**
@@ -73,5 +103,4 @@ public class TamaGolem {
 		pietre.add(pietra);
 		return pietra;
 	}
-
 }

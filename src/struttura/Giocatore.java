@@ -35,9 +35,11 @@ public class Giocatore {
 	public Giocatore(int nMaxGolem, String nome, int nPietreGolem) {
 		this.nMaxGolem = nMaxGolem;
 		this.nome = nome;
-
+		
+		TamaGolem newGolem = new TamaGolem(nPietreGolem);
+		
 		for (int i = 0; i <= nMaxGolem; i++) {
-			TamaGolem newGolem = new TamaGolem(nPietreGolem);
+			TamaGolem newNewGolem = new TamaGolem();
 			golems.add(newGolem);
 		}
 		nGolemDisp = golems.size();

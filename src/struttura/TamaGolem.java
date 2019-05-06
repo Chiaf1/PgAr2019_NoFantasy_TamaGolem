@@ -14,7 +14,7 @@ public class TamaGolem {
 	/**
 	 * vita massima di un golem
 	 */
-	private static int vitaMax = 100;
+	private static final int VITA_MAX = 100;
 	/**
 	 * vita attuale del golem
 	 */
@@ -24,6 +24,13 @@ public class TamaGolem {
 	 * disponibile
 	 */
 	private boolean isDisponibile = true;
+
+	/**
+	 * costruttore vuoto
+	 */
+	public TamaGolem() {
+
+	}
 
 	/**
 	 * costruttore della classe tamaGolem che inizializza il numero massimo di
@@ -39,7 +46,7 @@ public class TamaGolem {
 	 * @param pietreSelez (pietre da assegnare al golem)
 	 */
 	public void setUpGolem(String[] pietreSelez) {
-		for (int i = 0; i < pietreSelez.length; i++) {
+		for (int i = 0; i < nPietre; i++) {
 			pietre.add(pietreSelez[i]);
 		}
 	}
@@ -49,7 +56,7 @@ public class TamaGolem {
 	 * 
 	 * @return il numero massimo di pietre
 	 */
-	public static int getnPietre() {
+	public int getnPietre() {
 		return nPietre;
 	}
 
@@ -58,8 +65,8 @@ public class TamaGolem {
 	 * 
 	 * @return il valore della vita massima
 	 */
-	public static int getVitaMax() {
-		return vitaMax;
+	public int getVitaMax() {
+		return VITA_MAX;
 	}
 
 	/**
@@ -102,5 +109,14 @@ public class TamaGolem {
 		String pietra = pietre.remove();
 		pietre.add(pietra);
 		return pietra;
+	}
+
+	/**
+	 * ritorna la coda di pietre
+	 * 
+	 * @return la coda di pietre
+	 */
+	public Queue<String> getPietre() {
+		return pietre;
 	}
 }

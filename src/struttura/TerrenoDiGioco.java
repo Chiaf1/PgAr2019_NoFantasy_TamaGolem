@@ -149,7 +149,7 @@ public class TerrenoDiGioco {
 
 			if (pietraG1 == pietraG2) {
 				interfaccia.scriviR("non è stato inflitto alcun danno.");
-			} else {
+			} else {//cerco nella lista degli indici dei due nodi gli inidici uguali, che dovrebbe essere solo uno
 				ArrayList<Integer> indiceArchi = new ArrayList<>();
 				for (int i = 0; i < equilibrio.getN(); i++) {
 					if (equilibrio.getNodo(i).getColore().equals(pietraG1)) {
@@ -163,20 +163,49 @@ public class TerrenoDiGioco {
 						break;
 					}
 				}
-				int indiceArco = indiceArchi.get(0);
+				int indiceArco = indiceArchi.get(0); //l'arrylist inidiciArchi dovrebbe contenere solamente un indice che è l'arco che collega i due nodi
 				
+				//disitinguo i due casi dove la pietraG1 puù essere o al nodo1 o al nodo2 dell'arco
 				if (equilibrio.getArco(indiceArco).getNodo1().equals(pietraG1)) {
-					if (!equilibrio.getArco(indiceArco).getDirezione()) {
+					if (equilibrio.getArco(indiceArco).getDirezione()) {//la direzione positiva va da nodo1 a nodo2
 						giocatori.get(indGiocatori[1]).getGolem(giocatori.get(indGiocatori[1]).getGolemAttivo()).decVita(equilibrio.getArco(indiceArco).getValore());
+						interfaccia.scriviR("La pietra " + pietraG1 + " ha prevalso sulla pietra " + pietraG2 + " causando " + equilibrio.getArco(indiceArco).getValore() + " danni al golem di " + giocatori.get(indGiocatori[1]).getNome());
+						interfaccia.scriviR("La vita attuale del golem di " + giocatori.get(indGiocatori[1]).getNome() + " è: " + giocatori.get(indGiocatori[1]).getGolem(giocatori.get(indGiocatori[1]).getGolemAttivo()).getVitaAtt());
 					}else {
 						giocatori.get(indGiocatori[0]).getGolem(giocatori.get(indGiocatori[0]).getGolemAttivo()).decVita(equilibrio.getArco(indiceArco).getValore());
+						interfaccia.scriviR("La pietra " + pietraG2 + " ha prevalso sulla pietra " + pietraG1 + " causando " + equilibrio.getArco(indiceArco).getValore() + " danni al golem di " + giocatori.get(indGiocatori[0]).getNome());
+						interfaccia.scriviR("La vita attuale del golem di " + giocatori.get(indGiocatori[0]).getNome() + " è: " + giocatori.get(indGiocatori[0]).getGolem(giocatori.get(indGiocatori[0]).getGolemAttivo()).getVitaAtt());
+					}
+				}else if (equilibrio.getArco(indiceArco).getNodo2().equals(pietraG1)) {
+					if (!equilibrio.getArco(indiceArco).getDirezione()) {//la direzione positiva va da nodo1 a nodo2
+						giocatori.get(indGiocatori[1]).getGolem(giocatori.get(indGiocatori[1]).getGolemAttivo()).decVita(equilibrio.getArco(indiceArco).getValore());
+						interfaccia.scriviR("La pietra " + pietraG1 + " ha prevalso sulla pietra " + pietraG2 + " causando " + equilibrio.getArco(indiceArco).getValore() + " danni al golem di " + giocatori.get(indGiocatori[1]).getNome());
+						interfaccia.scriviR("La vita attuale del golem di " + giocatori.get(indGiocatori[1]).getNome() + " è: " + giocatori.get(indGiocatori[1]).getGolem(giocatori.get(indGiocatori[1]).getGolemAttivo()).getVitaAtt());
+					}else {
+						giocatori.get(indGiocatori[0]).getGolem(giocatori.get(indGiocatori[0]).getGolemAttivo()).decVita(equilibrio.getArco(indiceArco).getValore());
+						interfaccia.scriviR("La pietra " + pietraG2 + " ha prevalso sulla pietra " + pietraG1 + " causando " + equilibrio.getArco(indiceArco).getValore() + " danni al golem di " + giocatori.get(indGiocatori[0]).getNome());
+						interfaccia.scriviR("La vita attuale del golem di " + giocatori.get(indGiocatori[0]).getNome() + " è: " + giocatori.get(indGiocatori[0]).getGolem(giocatori.get(indGiocatori[0]).getGolemAttivo()).getVitaAtt());
 					}
 				}
 			}
-
+			
+			//controllo stato dei golem attivi per i due giocatori
+			if (!giocatori.get(indGiocatori[0]).getGolem(giocatori.get(indGiocatori[0]).getGolemAttivo()).getIsDisponibile()) {
+				interfaccia.scriviR("Il golem di " + giocatori.get(indGiocatori[0]).getNome() + " ha preso troppi danni quindi deve essre cambiato.");
+				recoverPietre(indGiocatori[0]);
+				if(!evocazioneGolem(indGiocatori[0])) {
+					return;
+				}
+			}
+			if (!giocatori.get(indGiocatori[1]).getGolem(giocatori.get(indGiocatori[1]).getGolemAttivo()).getIsDisponibile()) {
+				interfaccia.scriviR("Il golem di " + giocatori.get(indGiocatori[1]).getNome() + " ha preso troppi danni quindi deve essre cambiato.");
+				recoverPietre(indGiocatori[1]);
+				if(!evocazioneGolem(indGiocatori[1])) {
+					return;
+				}
+			}
+			
 		}
-
-		// tamagolem che ne ha presi troppi muore e deve essere sostituito
 	}
 
 	/**
@@ -206,7 +235,8 @@ public class TerrenoDiGioco {
 	 *         possibile
 	 */
 	private boolean evocazioneGolem(int giocatore) {
-
+		interfaccia.scriviR("L'evocazione del golem per " + giocatori.get(giocatore).getNome() + " è iniziata;");
+		
 		// evoco il primo golem disponibile
 		if (!(giocatori.get(giocatore).evocazioneGolem())) {
 			return false;

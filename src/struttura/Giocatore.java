@@ -29,8 +29,9 @@ public class Giocatore {
 	 * l'array di golem a seconda del loro numero e viene inizializzato il numero di
 	 * golem disponibili
 	 * 
-	 * @param nMaxGolem (numero massimo di golem)
-	 * @param nome      (nome del giocatore)
+	 * @param nMaxGolem    (numero massimo di golem)
+	 * @param nome         (nome del giocatore)
+	 * @param nPietreGolem (numero di pietre che può contenere un golem)
 	 */
 	public Giocatore(int nMaxGolem, String nome, int nPietreGolem) {
 		this.nMaxGolem = nMaxGolem;

@@ -78,8 +78,8 @@ public class InterfacciaUtente {
 	 * @param vincitore (il giocatore vincitore della partita)
 	 */
 	public void finePartita(Giocatore vincitore) {
-		scriviR("Bene!!! la partita è finalmente finita ora è il momento per insultare il perdente.\n"
-				+ "che non è " + vincitore.getNome() + ", lui ha vinto.");
+		scriviR("Bene!!! la partita è finalmente finita ora è il momento per insultare il perdente.\n" + "che non è "
+				+ vincitore.getNome() + ", lui ha vinto.");
 		scriviR("Ha vinto con la bellezza di " + vincitore.getGolemDisp() + " golem ancora disponibili");
 	}
 }

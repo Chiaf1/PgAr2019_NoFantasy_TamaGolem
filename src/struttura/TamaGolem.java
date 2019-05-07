@@ -35,6 +35,8 @@ public class TamaGolem {
 	/**
 	 * costruttore della classe tamaGolem che inizializza il numero massimo di
 	 * pietre
+	 * 
+	 * @param nPietre (numero di pietre che può contenere un golem)
 	 */
 	public TamaGolem(int nPietre) {
 		this.nPietre = nPietre;

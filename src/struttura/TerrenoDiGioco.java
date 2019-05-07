@@ -87,7 +87,7 @@ public class TerrenoDiGioco {
 	}
 
 	/**
-	 * metodo che dichiara il vincitore e indica se fare un altra partita oppuire
+	 * metodo che dichiara il vincitore e indica se fare un altra partita oppure
 	 * chiudere il programma
 	 * 
 	 * @return true se si vuole fare un altra partita, false se si vuole chiudere il
@@ -115,7 +115,8 @@ public class TerrenoDiGioco {
 	}
 
 	/**
-	 * 
+	 * metodo principale della classe TerrenoDiGioco, gestisce la partita vera e
+	 * propria con lo scontro dei golem e la loro evocazione
 	 */
 	public void scontro() {
 		Random rnd = new Random();
@@ -298,7 +299,7 @@ public class TerrenoDiGioco {
 	}
 
 	/**
-	 * metodo per stampare l'equiliobrio della partita
+	 * metodo per la stampa a console dell'equilibrio della partita
 	 */
 	private void printEquilibrio() {
 

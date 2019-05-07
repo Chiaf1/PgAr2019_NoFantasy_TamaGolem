@@ -302,7 +302,17 @@ public class TerrenoDiGioco {
 	 * metodo per la stampa a console dell'equilibrio della partita
 	 */
 	private void printEquilibrio() {
+		interfaccia.scriviR("L'equilibrio utilizzato all'interno della partita appena trascorsa è:\n");
+		for (int i = 0; i < equilibrio.getArchi().size(); i++) {
+			if (!equilibrio.getArco(i).getDirezione()) {
+				interfaccia.scriviR(equilibrio.getArco(i).getNodo1().getColore() + " - "
+						+ equilibrio.getArco(i).getValore() + " -> " + equilibrio.getArco(i).getNodo2().getColore());
+			} else {
+				interfaccia.scriviR(equilibrio.getArco(i).getNodo2().getColore() + " - "
+						+ equilibrio.getArco(i).getValore() + " -> " + equilibrio.getArco(i).getNodo1().getColore());
+			}
 
+		}
 	}
 
 }

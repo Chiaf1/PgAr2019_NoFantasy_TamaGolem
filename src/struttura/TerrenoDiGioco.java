@@ -57,10 +57,10 @@ public class TerrenoDiGioco {
 		do {
 			n = interfaccia.letturaInt("Inserire il numero di elementi per determinare la difficoltà\n"
 					+ "(facile (3;5))\n" + "(medio (6;8))\n" + "(difficile (9;10)): ");
-			if (n < 2 && n > 11) {
+			if (n > 2 && n < 11) {
 				interfaccia.scriviR("Il valore inserito non va bene, prego reinserire");
 			}
-		} while (n < 2 && n > 11);
+		} while (n > 2 && n < 11);
 
 		p = (int) Math.ceil((n + 1) / 3) + 1;
 

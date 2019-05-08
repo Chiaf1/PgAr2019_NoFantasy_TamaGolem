@@ -165,12 +165,7 @@ public class TerrenoDiGioco {
 						}
 						for (int j = 0; j < equilibrio.getNodi().size(); j++) {
 							if (equilibrio.getNodo(j).getColore().equals(pietraG2)) {
-								ArrayList<Integer> indiceArchi2 = new ArrayList<>();
-								for(Integer luca : equilibrio.getNodo(j).getIndiciArchi()) {
-									indiceArchi2.add(luca);
-								}
-								indiceArchi2=equilibrio.getNodo(j).getIndiciArchi();
-								indiceArchi.retainAll(indiceArchi2);
+								indiceArchi.retainAll(equilibrio.getNodo(j).getIndiciArchi());
 								break;
 							}
 						}

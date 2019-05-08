@@ -31,9 +31,9 @@ public class TerrenoDiGioco {
 	 */
 	private int sp;
 	/**
-	 * lista contenente le queue delle pietre disponibili
+	 * HashMap contenente le queue delle pietre disponibili
 	 */
-	private ArrayList<Queue<String>> borsaPietre = new ArrayList<Queue<String>>();
+	private Map<String, Queue<String>> borsaPietre = new HashMap<String, Queue<String>>();
 	/**
 	 * lista dei giocatori della partita
 	 */
@@ -75,7 +75,7 @@ public class TerrenoDiGioco {
 			for (int j = 0; j < sp; j++) {
 				newQueue.add(equilibrio.getNodo(i).getColore());
 			}
-			borsaPietre.add(newQueue);
+			borsaPietre.put(newQueue.element(), newQueue);
 		}
 
 		for (int i = 0; i < N_GIOCATORI; i++) {
@@ -158,17 +158,27 @@ public class TerrenoDiGioco {
 			} else {// cerco nella lista degli indici dei due nodi gli inidici uguali, che dovrebbe
 					// essere solo uno
 				ArrayList<Integer> indiceArchi = new ArrayList<>();
-				for (int i = 0; i < equilibrio.getN(); i++) {
+				for (int i = 0; i < equilibrio.getNodi().size(); i++) {
 					if (equilibrio.getNodo(i).getColore().equals(pietraG1)) {
-						indiceArchi = equilibrio.getNodo(i).getIndiciArchi();
-						for (int j = 0; j < equilibrio.getN(); j++) {
+						for(Integer luca : equilibrio.getNodo(i).getIndiciArchi()) {
+							indiceArchi.add(luca);
+						}
+						for (int j = 0; j < equilibrio.getNodi().size(); j++) {
 							if (equilibrio.getNodo(j).getColore().equals(pietraG2)) {
-								indiceArchi.retainAll(equilibrio.getNodo(j).getIndiciArchi());
+								ArrayList<Integer> indiceArchi2 = new ArrayList<>();
+								for(Integer luca : equilibrio.getNodo(j).getIndiciArchi()) {
+									indiceArchi2.add(luca);
+								}
+								indiceArchi2=equilibrio.getNodo(j).getIndiciArchi();
+								indiceArchi.retainAll(indiceArchi2);
 								break;
 							}
 						}
 						break;
 					}
+				}
+				if(indiceArchi.size()==0) {
+					interfaccia.scriviC("fattone");
 				}
 				int indiceArco = indiceArchi.get(0); // l'arrylist inidiciArchi dovrebbe contenere solamente un indice
 														// che è l'arco che collega i due nodi
@@ -250,13 +260,12 @@ public class TerrenoDiGioco {
 	private void recoverPietre(int giocatore) {
 		for (int i = 0; i < giocatori.get(giocatore).getGolem(giocatori.get(giocatore).getGolemAttivo())
 				.getnPietre(); i++) {
-			for (int j = 0; j < borsaPietre.size(); j++) {
-				if (borsaPietre.get(j).element().equals(giocatori.get(giocatore)
-						.getGolem(giocatori.get(giocatore).getGolemAttivo()).getPietre().element())) {
-					borsaPietre.get(j).add(giocatori.get(giocatore).getGolem(giocatori.get(giocatore).getGolemAttivo())
-							.getPietre().remove());
-				}
-			}
+			borsaPietre
+					.get(giocatori.get(giocatore).getGolem(giocatori.get(giocatore).getGolemAttivo()).getPietre()
+							.element())
+					.add(giocatori.get(giocatore).getGolem(giocatori.get(giocatore).getGolemAttivo()).getPietre()
+							.remove());
+
 		}
 	}
 
@@ -280,15 +289,22 @@ public class TerrenoDiGioco {
 		String[] newPietre = new String[p];
 		for (int i = 0; i < newPietre.length; i++) {
 			printBorsaPietre();
-			int ind = 0;
+			String ind = "";
+			boolean isCorretto = false;
 			do {
-				ind = interfaccia.letturaInt("Inserire l'indice della pietra da aggiungere: ");
-				if (ind < 0 || ind >= borsaPietre.size()) {
+				ind = interfaccia.letturaString("Inserire l'indice della pietra da aggiungere: ");
+				for (Map.Entry<String, Queue<String>> entry : borsaPietre.entrySet()) {
+					if (entry.getKey().equals(ind)) {
+						isCorretto = true;
+					}
+				}
+				if (!isCorretto) {
 					interfaccia.scriviR("L'indice inserito non va bene, ritentala");
 				} else if (borsaPietre.get(ind).size() == 0) {
 					interfaccia.scriviR("L'indice inserito non va bene, ritentala");
+					isCorretto=false;
 				}
-			} while (ind < 0 || ind >= borsaPietre.size() || borsaPietre.get(ind).size() == 0);
+			} while (!isCorretto);
 			newPietre[i] = borsaPietre.get(ind).remove();
 		}
 
@@ -301,10 +317,9 @@ public class TerrenoDiGioco {
 	 * metodo per la stampa a console della borsa delle pietre
 	 */
 	private void printBorsaPietre() {
-		for (int i = 0; i < borsaPietre.size(); i++) {
-			if (borsaPietre.get(i).size() != 0) {
-				interfaccia.scriviR("_" + i + " " + borsaPietre.get(i).element() + "*" + borsaPietre.get(i).size());
-			}
+		for (Map.Entry<String, Queue<String>> entry : borsaPietre.entrySet()) {
+			interfaccia.scriviR("_" + entry.getKey() + "*" + borsaPietre.get(entry.getKey()).size());
+
 		}
 	}
 
@@ -312,7 +327,7 @@ public class TerrenoDiGioco {
 	 * metodo per la stampa a console dell'equilibrio della partita
 	 */
 	private void printEquilibrio() {
-		interfaccia.scriviR("L'equilibrio utilizzato all'interno della partita appena trascorsa è:\n");
+		interfaccia.scriviR("\n\n\n\nL'equilibrio utilizzato all'interno della partita appena trascorsa è:\n");
 		for (int i = 0; i < equilibrio.getArchi().size(); i++) {
 			if (!equilibrio.getArco(i).getDirezione()) {
 				interfaccia.scriviR(equilibrio.getArco(i).getNodo1().getColore() + " - "
@@ -323,6 +338,7 @@ public class TerrenoDiGioco {
 			}
 
 		}
+		interfaccia.scriviC("\n\n\n\n");
 	}
 
 }

@@ -1,6 +1,7 @@
 package struttura;
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 import grafo.*;
 import interfaccia.*;
@@ -128,6 +129,18 @@ public class TerrenoDiGioco {
 	 * propria con lo scontro dei golem e la loro evocazione
 	 */
 	public void scontro() {
+		boolean aspetta = false;
+		while (true) {
+			String ms = interfaccia
+					.letturaString("Desideri che il programma vada in pausa alla fine di ogni turno? \n" + "_si\n" + "_no\n" + "rispondi qui: ");
+			if (ms.equals("si")) {
+				aspetta = true;
+				break;
+			} else if (ms.equals("no")) {
+				aspetta = false;
+				break;
+			}
+		}
 		Random rnd = new Random();
 		int[] indGiocatori = new int[2];
 		// scelta del primo giocatore che deve partire
@@ -248,7 +261,14 @@ public class TerrenoDiGioco {
 				interfaccia.scriviR("Al giocatore " + giocatori.get(indGiocatori[1]).getNome() + " rimangono "
 						+ (giocatori.get(indGiocatori[1]).getGolemDisp()-1) + " golem");
 			}
-
+			
+			if(aspetta) {
+				try {
+				TimeUnit.SECONDS.sleep(1);
+				}catch (Exception e) {
+					
+				}
+			}
 		}
 	}
 

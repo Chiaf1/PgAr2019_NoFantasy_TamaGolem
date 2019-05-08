@@ -57,31 +57,36 @@ public class TerrenoDiGioco {
 		do {
 			n = interfaccia.letturaInt("Inserire il numero di elementi per determinare la difficoltà\n"
 					+ "(facile (3;5))\n" + "(medio (6;8))\n" + "(difficile (9;10)): ");
-			if (n > 2 && n < 11) {
+			if (n < 2 && n > 11) {
 				interfaccia.scriviR("Il valore inserito non va bene, prego reinserire");
 			}
-		} while (n > 2 && n < 11);
+		} while (n < 2 && n > 11);
 
-		p = (int) Math.ceil((n + 1) / 3) + 1;
+		p = (int) Math.ceil((n + 1.0) / 3.0) + 1;
 
-		g = (int) Math.ceil(((n - 1) * (n - 2)) / (2 * p));
+		g = (int) Math.ceil(((n - 1.0) * (n - 2)) / (2.0 * p));
 
-		sp = (int) Math.ceil((2 * g * p) / n);
+		sp = (int) Math.ceil((2.0 * g * p) / n);
 
 		equilibrio = new Grafo(V, n);
 
-		for (int i = 0; i <= equilibrio.getNodi().size(); i++) {
+		for (int i = 0; i < equilibrio.getNodi().size(); i++) {
 			Queue<String> newQueue = new ArrayDeque<String>();
-			for (int j = 0; j <= sp; j++) {
+			for (int j = 0; j < sp; j++) {
 				newQueue.add(equilibrio.getNodo(i).getColore());
 			}
 			borsaPietre.add(newQueue);
 		}
 
-		for (int i = 0; i <= N_GIOCATORI; i++) {
+		for (int i = 0; i < N_GIOCATORI; i++) {
 			Giocatore newGiocatore = new Giocatore(g,
 					interfaccia.letturaString("Inserire il nome del giocatore" + i + ": "), p);
 			giocatori.add(newGiocatore);
+		}
+		if (giocatori.get(0).getNome().equals(giocatori.get(1).getNome())) {
+			giocatori.get(1).setNome(giocatori.get(1).getNome() + "1");
+			interfaccia.scriviR("Il secondo giocatore ha inserito il nome uguale a quello del primo,\n"
+					+ " per tanto è stato cambiato." + "Il nuovo nome è: " + giocatori.get(1).getNome());
 		}
 
 	}
@@ -142,11 +147,11 @@ public class TerrenoDiGioco {
 			String pietraG1 = giocatori.get(indGiocatori[0]).getGolem(giocatori.get(indGiocatori[0]).getGolemAttivo())
 					.getPietra();
 			interfaccia.scriviR(
-					"Il Golem Di " + giocatori.get(indGiocatori[0]).getNome() + "lancia la pietra " + pietraG1);
+					"Il Golem Di " + giocatori.get(indGiocatori[0]).getNome() + " lancia la pietra " + pietraG1);
 			String pietraG2 = giocatori.get(indGiocatori[1]).getGolem(giocatori.get(indGiocatori[1]).getGolemAttivo())
 					.getPietra();
 			interfaccia.scriviR(
-					"Il Golem Di " + giocatori.get(indGiocatori[1]).getNome() + "lancia la pietra " + pietraG2);
+					"Il Golem Di " + giocatori.get(indGiocatori[1]).getNome() + " lancia la pietra " + pietraG2);
 
 			if (pietraG1 == pietraG2) {
 				interfaccia.scriviR("non è stato inflitto alcun danno.");
@@ -170,7 +175,7 @@ public class TerrenoDiGioco {
 
 				// disitinguo i due casi dove la pietraG1 puù essere o al nodo1 o al nodo2
 				// dell'arco
-				if (equilibrio.getArco(indiceArco).getNodo1().equals(pietraG1)) {
+				if (equilibrio.getArco(indiceArco).getNodo1().getColore().equals(pietraG1)) {
 					if (equilibrio.getArco(indiceArco).getDirezione()) {// la direzione positiva va da nodo1 a nodo2
 						giocatori.get(indGiocatori[1]).getGolem(giocatori.get(indGiocatori[1]).getGolemAttivo())
 								.decVita(equilibrio.getArco(indiceArco).getValore());
@@ -190,7 +195,7 @@ public class TerrenoDiGioco {
 								+ " è: " + giocatori.get(indGiocatori[0])
 										.getGolem(giocatori.get(indGiocatori[0]).getGolemAttivo()).getVitaAtt());
 					}
-				} else if (equilibrio.getArco(indiceArco).getNodo2().equals(pietraG1)) {
+				} else if (equilibrio.getArco(indiceArco).getNodo2().getColore().equals(pietraG1)) {
 					if (!equilibrio.getArco(indiceArco).getDirezione()) {// la direzione positiva va da nodo1 a nodo2
 						giocatori.get(indGiocatori[1]).getGolem(giocatori.get(indGiocatori[1]).getGolemAttivo())
 								.decVita(equilibrio.getArco(indiceArco).getValore());
@@ -263,7 +268,8 @@ public class TerrenoDiGioco {
 	 *         possibile
 	 */
 	private boolean evocazioneGolem(int giocatore) {
-		interfaccia.scriviR("L'evocazione del golem per " + giocatori.get(giocatore).getNome() + " è iniziata;");
+		interfaccia.scriviR("L'evocazione del golem per " + giocatori.get(giocatore).getNome() + " è iniziata:\n"
+				+ "Devi scegliare " + p + " pietre");
 
 		// evoco il primo golem disponibile
 		if (!(giocatori.get(giocatore).evocazioneGolem())) {
@@ -277,10 +283,12 @@ public class TerrenoDiGioco {
 			int ind = 0;
 			do {
 				ind = interfaccia.letturaInt("Inserire l'indice della pietra da aggiungere: ");
-				if (ind >= 0 && ind < borsaPietre.size()) {
+				if (ind < 0 || ind >= borsaPietre.size()) {
+					interfaccia.scriviR("L'indice inserito non va bene, ritentala");
+				} else if (borsaPietre.get(ind).size() == 0) {
 					interfaccia.scriviR("L'indice inserito non va bene, ritentala");
 				}
-			} while (ind >= 0 && ind < borsaPietre.size());
+			} while (ind < 0 || ind >= borsaPietre.size() || borsaPietre.get(ind).size() == 0);
 			newPietre[i] = borsaPietre.get(ind).remove();
 		}
 
@@ -294,7 +302,9 @@ public class TerrenoDiGioco {
 	 */
 	private void printBorsaPietre() {
 		for (int i = 0; i < borsaPietre.size(); i++) {
-			interfaccia.scriviR("_" + i + " " + borsaPietre.get(i).element() + "*" + borsaPietre.get(i).size());
+			if (borsaPietre.get(i).size() != 0) {
+				interfaccia.scriviR("_" + i + " " + borsaPietre.get(i).element() + "*" + borsaPietre.get(i).size());
+			}
 		}
 	}
 

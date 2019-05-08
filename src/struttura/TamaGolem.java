@@ -29,7 +29,8 @@ public class TamaGolem {
 	 * costruttore vuoto
 	 */
 	public TamaGolem() {
-
+		// inizializza la vita del golem
+		vitaAtt = VITA_MAX;
 	}
 
 	/**

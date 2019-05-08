@@ -39,7 +39,7 @@ public class Giocatore {
 
 		TamaGolem newGolem = new TamaGolem(nPietreGolem);
 
-		for (int i = 0; i <= nMaxGolem; i++) {
+		for (int i = 0; i < nMaxGolem; i++) {
 			TamaGolem newNewGolem = new TamaGolem();
 			golems.add(newNewGolem);
 		}
@@ -114,6 +114,15 @@ public class Giocatore {
 	 */
 	public int getGolemDisp() {
 		return nGolemDisp;
+	}
+
+	/**
+	 * metodo per settare il nome
+	 * 
+	 * @param nome (nuovo nome da dare al giocatore)
+	 */
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 
 }

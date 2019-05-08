@@ -777,6 +777,6 @@ public class Grafo {
 	 * resetta tutto il grafo
 	 */
 	public void reset() {
-
+		nodi.get(0).reset();
 	}
 }

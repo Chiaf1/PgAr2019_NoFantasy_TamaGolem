@@ -51,7 +51,7 @@ public class TerrenoDiGioco {
 	 * 
 	 */
 	public TerrenoDiGioco() {
-
+		interfaccia.scriviR("\n-------------------------------Inizio Partita-------------------------------");
 		interfaccia.initPartia();
 
 		do {
@@ -99,20 +99,24 @@ public class TerrenoDiGioco {
 	 *         programma
 	 */
 	public boolean finePartita() {
+		interfaccia.scriviR("\n-------------------------------Fine Partita-------------------------------");
 		if (giocatori.get(0).getGolemDisp() == 0) {
-			interfaccia.finePartita(giocatori.get(0));
-		} else {
 			interfaccia.finePartita(giocatori.get(1));
+		} else {
+			interfaccia.finePartita(giocatori.get(0));
 		}
 
 		printEquilibrio();
-
+		
+		interfaccia.scriviR("\n-------------------------------Chiusura-------------------------------");
 		while (true) {
-			String ms = interfaccia.letturaString("Desideri fare un altra partita: \n" + "_si\n" + "_no");
+			String ms = interfaccia
+					.letturaString("Desideri fare un altra partita? \n" + "_si\n" + "_no\n" + "rispondi qui: ");
 			if (ms.equals("si")) {
+				equilibrio.reset();
 				return true;
 			} else if (ms.equals("no")) {
-				interfaccia.scriviR("ok allora chiudo,\n" + "c ya");
+				interfaccia.scriviR("\nok allora chiudo,\n" + "ciao");
 				return false;
 			}
 		}
@@ -144,6 +148,7 @@ public class TerrenoDiGioco {
 		// turno, i golem si tirano la prima pietra e vince chi lo ha più lungo
 		// dopo aver preso il danno viene segnalata quanta vita rimane
 		while (true) {
+			interfaccia.scriviR("-------------------------------Inizio Turno-------------------------------");
 			String pietraG1 = giocatori.get(indGiocatori[0]).getGolem(giocatori.get(indGiocatori[0]).getGolemAttivo())
 					.getPietra();
 			interfaccia.scriviR(
@@ -160,7 +165,7 @@ public class TerrenoDiGioco {
 				ArrayList<Integer> indiceArchi = new ArrayList<>();
 				for (int i = 0; i < equilibrio.getNodi().size(); i++) {
 					if (equilibrio.getNodo(i).getColore().equals(pietraG1)) {
-						for(Integer luca : equilibrio.getNodo(i).getIndiciArchi()) {
+						for (Integer luca : equilibrio.getNodo(i).getIndiciArchi()) {
 							indiceArchi.add(luca);
 						}
 						for (int j = 0; j < equilibrio.getNodi().size(); j++) {
@@ -171,9 +176,6 @@ public class TerrenoDiGioco {
 						}
 						break;
 					}
-				}
-				if(indiceArchi.size()==0) {
-					interfaccia.scriviC("fattone");
 				}
 				int indiceArco = indiceArchi.get(0); // l'arrylist inidiciArchi dovrebbe contenere solamente un indice
 														// che è l'arco che collega i due nodi
@@ -232,6 +234,8 @@ public class TerrenoDiGioco {
 				if (!evocazioneGolem(indGiocatori[0])) {
 					return;
 				}
+				interfaccia.scriviR("Al giocatore " + giocatori.get(indGiocatori[0]).getNome() + " rimangono "
+						+ giocatori.get(indGiocatori[0]).getGolemDisp() + " golem");
 			}
 			if (!giocatori.get(indGiocatori[1]).getGolem(giocatori.get(indGiocatori[1]).getGolemAttivo())
 					.getIsDisponibile()) {
@@ -241,6 +245,8 @@ public class TerrenoDiGioco {
 				if (!evocazioneGolem(indGiocatori[1])) {
 					return;
 				}
+				interfaccia.scriviR("Al giocatore " + giocatori.get(indGiocatori[1]).getNome() + " rimangono "
+						+ (giocatori.get(indGiocatori[1]).getGolemDisp()-1) + " golem");
 			}
 
 		}
@@ -272,13 +278,14 @@ public class TerrenoDiGioco {
 	 *         possibile
 	 */
 	private boolean evocazioneGolem(int giocatore) {
-		interfaccia.scriviR("L'evocazione del golem per " + giocatori.get(giocatore).getNome() + " è iniziata:\n"
-				+ "Devi scegliare " + p + " pietre");
-
 		// evoco il primo golem disponibile
 		if (!(giocatori.get(giocatore).evocazioneGolem())) {
+			interfaccia.scriviR("Il giocatore " + giocatori.get(giocatore).getNome() + " non ha più golem disponibili.");
 			return false;
 		}
+		interfaccia.scriviR("-------------------------------Inizio Evocazione-------------------------------");
+		interfaccia.scriviR("L'evocazione del golem per " + giocatori.get(giocatore).getNome() + " è iniziata:\n"
+				+ "Devi scegliare " + p + " pietre");
 
 		// carico le pietre
 		String[] newPietre = new String[p];
@@ -287,7 +294,7 @@ public class TerrenoDiGioco {
 			String ind = "";
 			boolean isCorretto = false;
 			do {
-				ind = interfaccia.letturaString("Inserire l'indice della pietra da aggiungere: ");
+				ind = interfaccia.letturaString("Inserire il nome della pietra da aggiungere: ");
 				for (Map.Entry<String, Queue<String>> entry : borsaPietre.entrySet()) {
 					if (entry.getKey().equals(ind)) {
 						isCorretto = true;
@@ -297,7 +304,7 @@ public class TerrenoDiGioco {
 					interfaccia.scriviR("L'indice inserito non va bene, ritentala");
 				} else if (borsaPietre.get(ind).size() == 0) {
 					interfaccia.scriviR("L'indice inserito non va bene, ritentala");
-					isCorretto=false;
+					isCorretto = false;
 				}
 			} while (!isCorretto);
 			newPietre[i] = borsaPietre.get(ind).remove();
@@ -322,7 +329,8 @@ public class TerrenoDiGioco {
 	 * metodo per la stampa a console dell'equilibrio della partita
 	 */
 	private void printEquilibrio() {
-		interfaccia.scriviR("\n\n\n\nL'equilibrio utilizzato all'interno della partita appena trascorsa è:\n");
+		interfaccia.scriviR("\n\n-------------------------------Equilibrio-------------------------------");
+		interfaccia.scriviR("L'equilibrio utilizzato all'interno della partita appena trascorsa è:\n");
 		for (int i = 0; i < equilibrio.getArchi().size(); i++) {
 			if (!equilibrio.getArco(i).getDirezione()) {
 				interfaccia.scriviR(equilibrio.getArco(i).getNodo1().getColore() + " - "
@@ -333,7 +341,7 @@ public class TerrenoDiGioco {
 			}
 
 		}
-		interfaccia.scriviC("\n\n\n\n");
+		interfaccia.scriviC("\n\n");
 	}
 
 }

@@ -55,18 +55,15 @@ public class Giocatore {
 	 *         trovato un golem disponibile
 	 */
 	public boolean evocazioneGolem() {
-		if (nGolemDisp > 0) {
-			for (int i = 0; i < golems.size(); i++) {
-				if (golems.get(i).getIsDisponibile()) {
-					golemAttivo = i;
-					if (i > 1) {
-						nGolemDisp = nMaxGolem - (i - 1);
-					}
-					return true;
-				}
+		nGolemDisp = nMaxGolem;
+		for(int i = 0; i < golems.size(); i++ ) {
+			if(!golems.get(i).getIsDisponibile()) {
+				nGolemDisp--;
+			}else {
+				golemAttivo = i;
+				return true;
 			}
 		}
-		nGolemDisp = 0;
 		return false;
 	}
 

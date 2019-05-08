@@ -39,7 +39,7 @@ public class InterfacciaUtente {
 				finito = true;
 			} catch (InputMismatchException e) {
 				System.out.println("il valore inserito non è nel formato corretto");
-				String daButtare = lettore.next();
+				lettore.next();
 			}
 		} while (!finito);
 		return valoreLetto;

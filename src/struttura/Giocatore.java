@@ -41,7 +41,7 @@ public class Giocatore {
 
 		for (int i = 0; i <= nMaxGolem; i++) {
 			TamaGolem newNewGolem = new TamaGolem();
-			golems.add(newGolem);
+			golems.add(newNewGolem);
 		}
 		nGolemDisp = golems.size();
 	}
